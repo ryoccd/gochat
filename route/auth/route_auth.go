@@ -3,9 +3,16 @@ package auth
 import (
 	"net/http"
 
+	// See https://github.com/ryoccd/gochat/log
 	logger "github.com/ryoccd/gochat/log"
+
+	// See https://github.com/ryoccd/gochat/models
 	models "github.com/ryoccd/gochat/models"
-	"github.com/ryoccd/gochat/models/utils"
+
+	// See https://github.com/ryoccd/gochat/models/utils
+	utils "github.com/ryoccd/gochat/models/utils"
+
+	// See https://github.com/ryoccd/gochat/render
 	render "github.com/ryoccd/gochat/render"
 )
 
