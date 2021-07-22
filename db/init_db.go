@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 
+	// See https://github.com/ryoccd/gochat/log
 	logger "github.com/ryoccd/gochat/log"
 )
 

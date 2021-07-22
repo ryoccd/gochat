@@ -17,20 +17,24 @@ func init() {
 	Mlog = log.New(file, "INFO ", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
+//fmt.Println(a ...interface{}) alias
 func Puts(a ...interface{}) {
 	fmt.Println(a...)
 }
 
+// Logging at the Info-level.
 func Info(a ...interface{}) {
 	Mlog.SetPrefix("[INFO] ")
 	Mlog.Println(a...)
 }
 
+// Logging at the Error-level.
 func Error(a ...interface{}) {
 	Mlog.SetPrefix("[Error] ")
 	Mlog.Println(a...)
 }
 
+// Logging at the Warning-level.
 func Warn(a ...interface{}) {
 	Mlog.SetPrefix("[Warn] ")
 	Mlog.Println(a...)

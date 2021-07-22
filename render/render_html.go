@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+//Load the template file and make it ready for conversion.
 func ParseTemplateFile(filenames ...string) (t *template.Template) {
 	var files []string
 	t = template.New("layout")
@@ -17,6 +18,7 @@ func ParseTemplateFile(filenames ...string) (t *template.Template) {
 	return
 }
 
+//Convert an embedded variable to a real value
 func RenderHTML(writer http.ResponseWriter, data interface{}, filenames ...string) {
 	var files []string
 

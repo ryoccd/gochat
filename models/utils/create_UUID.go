@@ -5,9 +5,11 @@ import (
 	"crypto/sha1"
 	"fmt"
 
+	// See https://github.com/ryoccd/gochat/log
 	logger "github.com/ryoccd/gochat/log"
 )
 
+// create a random UUID with from RFC 4122
 func CreateUUID() (uuid string) {
 	u := new([16]byte)
 	_, err := rand.Read(u[:])
@@ -24,6 +26,7 @@ func CreateUUID() (uuid string) {
 	return
 }
 
+// hash plaintext with SHA-1
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
 	return
