@@ -22,8 +22,9 @@ func index(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		route.Error_message(writer, request, "Cannot get threads")
 	} else {
-		_, err := session.Session(writer, request)
 		var access string
+
+		_, err := session.Session(writer, request)
 		if err != nil {
 			access = "public"
 		} else {
