@@ -12,7 +12,7 @@ import (
 
 // GET /err?msg=
 //shows the error message page
-func err(writer http.ResponseWriter, request *http.Request) {
+func Err(writer http.ResponseWriter, request *http.Request) {
 	var access string
 	vals := request.URL.Query()
 	_, err := session.Session(writer, request)

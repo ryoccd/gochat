@@ -27,7 +27,8 @@ func Login(writer http.ResponseWriter, request *http.Request) {
 //Logs the user out
 func Logout(writer http.ResponseWriter, request *http.Request) {
 	cookie, err := request.Cookie("_cookie")
-	if err != nil {
+	logger.Info(cookie.Value)
+	if err != http.ErrNoCookie {
 		logger.Warn(err, "Failed to get cookie")
 		session := models.Session{Uuid: cookie.Value}
 		session.DeleteByUUID()

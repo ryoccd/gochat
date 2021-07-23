@@ -16,7 +16,7 @@ type Configuration struct {
 }
 
 // config
-var Config Configuration
+var Conf Configuration
 
 func init() {
 	loadConfig()
@@ -24,17 +24,21 @@ func init() {
 
 //Reads the configuration file and converts it to a format that can be read in the project.
 func loadConfig() {
-	file, err := os.Open("config.json")
+	file, err := os.Open("config/config.json")
 	if err != nil {
 		logger.Error("Cannot open config file", err)
 	}
 
+	logger.Info("Success! Open config file")
 	decoder := json.NewDecoder(file)
-	conf := Configuration{}
-	err = decoder.Decode(&conf)
+	Conf = Configuration{}
+	err = decoder.Decode(&Conf)
 	if err != nil {
 		logger.Error("Cannot get configration from file", err)
 	}
+
+	logger.Info(Conf)
+	logger.Info("End! Load config file")
 }
 
 func Version() string {

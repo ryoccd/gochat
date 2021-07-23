@@ -34,7 +34,7 @@ var Db = db.Db
 
 //Create a new session for an existing user
 func (user *User) CreateSession() (session Session, err error) {
-	statement := "INSERT INTO sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, create_at"
+	statement := "INSERT INTO sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, created_at"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		logger.Error("Failed to load DataBase")
@@ -42,14 +42,14 @@ func (user *User) CreateSession() (session Session, err error) {
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(utils.CreateUUID(), user.Email, user.Id, time.Now()).Scan(&session.Id, &session.Uuid, &session.UserId, &session.CreatedAt)
+	err = stmt.QueryRow(utils.CreateUUID(), user.Email, user.Id, time.Now()).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	return
 }
 
 //Get a session for an existing user
 func (user *User) Session() (session Session, err error) {
 	session = Session{}
-	err = Db.QueryRow("SELECT id, uuid, email, user_id, create_at FROM sessions WHERE user_id = $1", user.Id).
+	err = Db.QueryRow("SELECT id, uuid, email, user_id, created_at FROM sessions WHERE user_id = $1", user.Id).
 		Scan(&session.Id, &session.Uuid, &session.UserId, &session.CreatedAt)
 	return
 }
@@ -57,7 +57,7 @@ func (user *User) Session() (session Session, err error) {
 //Check the validity of the session
 func (session *Session) Check() (valid bool, err error) {
 	err = Db.QueryRow("SELECT id, uuid, email, user_id, created_at FROM sessions WHERE uuid = $1", session.Uuid).
-		Scan(&session.Id, &session.Uuid, &session.UserId, &session.CreatedAt)
+		Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	if err != nil {
 		valid = false
 		return
@@ -164,7 +164,7 @@ func Users() (users []User, err error) {
 func UserByEmail(email string) (user User, err error) {
 	user = User{}
 	err = Db.QueryRow("SELECT id, uuid, name, email, password, created_at FROM users WHERE email = $1", email).
-		Scan(&user.Id, &user.Uuid, &user.Email, &user.Password, &user.CreatedAt)
+		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }
 
@@ -172,6 +172,6 @@ func UserByEmail(email string) (user User, err error) {
 func UserByUUID(uuid string) (user User, err error) {
 	user = User{}
 	err = Db.QueryRow("SELECT id, uuid, name, email, password, created_at FROM users WHERE uuid = $1", uuid).
-		Scan(&user.Id, &user.Uuid, &user.Email, &user.Password, &user.CreatedAt)
+		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }

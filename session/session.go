@@ -11,7 +11,7 @@ import (
 // Checks if the user is logged in and has a session, if not err is not nil
 func Session(writer http.ResponseWriter, request *http.Request) (session models.Session, err error) {
 	cookie, err := request.Cookie("_cookie")
-	if err != nil {
+	if err == nil {
 		session = models.Session{Uuid: cookie.Value}
 		if ok, _ := session.Check(); !ok {
 			err = errors.New("Invalid session")

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	// See https://github.com/ryoccd/gochat/models
+	logger "github.com/ryoccd/gochat/log"
 	models "github.com/ryoccd/gochat/models"
 
 	// See https://github.com/ryoccd/gochat/render
@@ -17,7 +18,7 @@ import (
 	session "github.com/ryoccd/gochat/session"
 )
 
-func index(writer http.ResponseWriter, request *http.Request) {
+func Index(writer http.ResponseWriter, request *http.Request) {
 	threads, err := models.Threads()
 	if err != nil {
 		route.Error_message(writer, request, "Cannot get threads")
@@ -30,6 +31,7 @@ func index(writer http.ResponseWriter, request *http.Request) {
 		} else {
 			access = "private"
 		}
-		render.RenderHTML(writer, threads, "layout", fmt.Sprint(access, ".navbar"), "error")
+		logger.Info(fmt.Sprint("Hello! : ", access, ".navbar"))
+		render.RenderHTML(writer, threads, "layout", fmt.Sprint(access, ".navbar"), "index")
 	}
 }

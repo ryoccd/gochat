@@ -4,6 +4,7 @@ import (
 	"time"
 
 	// See https://github.com/ryoccd/gochat/models/utils
+	logger "github.com/ryoccd/gochat/log"
 	utils "github.com/ryoccd/gochat/models/utils"
 )
 
@@ -94,8 +95,9 @@ func (user *User) CreatePost(conv Thread, body string) (post Post, err error) {
 
 //Retrieve all threads from the database and return them
 func Threads() (threads []Thread, err error) {
-	rows, err := Db.Query("SELECT id, uuid, topic, user_id, created_at, FROM threads ORDER BY created_at DESC")
+	rows, err := Db.Query("SELECT id, uuid, topic, user_id, created_at FROM threads ORDER BY created_at DESC")
 	if err != nil {
+		logger.Error("Cannot find thread")
 		return
 	}
 	for rows.Next() {
