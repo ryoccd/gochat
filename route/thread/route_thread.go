@@ -20,11 +20,12 @@ import (
 	session "github.com/ryoccd/gochat/session"
 )
 
-// GET /threads/new
+// GET /thread/new
 //show the new thread from page
-func newThread(writer http.ResponseWriter, request *http.Request) {
+func NewThread(writer http.ResponseWriter, request *http.Request) {
 	_, err := session.Session(writer, request)
 	if err != nil {
+		logger.Warn(err)
 		http.Redirect(writer, request, "/login", 302)
 	} else {
 		render.RenderHTML(writer, nil, "layout", "private.navbar", "new.thread")
@@ -33,7 +34,7 @@ func newThread(writer http.ResponseWriter, request *http.Request) {
 
 // POST /thread/create
 //create new thread
-func createThread(writer http.ResponseWriter, request *http.Request) {
+func CreateThread(writer http.ResponseWriter, request *http.Request) {
 	sess, err := session.Session(writer, request)
 	if err != nil {
 		http.Redirect(writer, request, "/login", 302)
@@ -77,7 +78,7 @@ func ReadThread(writer http.ResponseWriter, request *http.Request) {
 
 // POST /thread/post
 //create the post
-func postThread(writer http.ResponseWriter, request *http.Request) {
+func PostThread(writer http.ResponseWriter, request *http.Request) {
 	sess, err := session.Session(writer, request)
 	if err != nil {
 		http.Redirect(writer, request, "/login", 302)
